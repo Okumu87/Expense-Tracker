@@ -23,6 +23,19 @@ form{
     width: 400px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
+    label{
+        margin-bottom: .5rem;
+        font-weight: bold;
+    }
+
+    input{
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+
+
     button{
         margin-top: 1rem;
         background-color: #4CAF50;
@@ -56,5 +69,14 @@ ul{
             border-radius: 5px;
             cursor: pointer;
         }
+    }
+}
+p{
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    .total-amount{
+        color: #4CAF50;
     }
 }
