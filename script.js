@@ -1,9 +1,11 @@
 const form = document.querySelector('form');
 const totalItems = [];
+let nextId = 0;
+
+
 
 form.addEventListener('submit', (e)=> {
     e.preventDefault();
-    let nextId = 0;
     const currentId = nextId++;
     const expenseInput= document.getElementById('expense');
     const amountInput = document.getElementById('amount');
@@ -44,6 +46,9 @@ expenseList.addEventListener('click', (e) => {
         listItem.remove();
     }
 
-
 })
+
+console.log(expenseList);
+
+// function 
 
