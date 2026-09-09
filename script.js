@@ -15,42 +15,34 @@ form.addEventListener('submit', (e)=> {
     const amountInput = document.getElementById('amount');
     const expenseName = expenseInput.value;
     const expenseAmount = amountInput.value;
-   
-    const itemList = document.createElement('li');
-    const spanItem = document.createElement('span');
-    const deleteButton = document.createElement('button');
-    deleteButton.classList.add('delete-btn');
-    deleteButton.textContent = 'Delete';
-   
-    spanItem.textContent = `${expenseName}: $${expenseAmount}`;
-    itemList.appendChild(spanItem);
-    itemList.appendChild(deleteButton);
-    itemList.dataset.id = currentId; // Assign a unique ID 
-    expenses.push({ id: currentId, name: expenseName, amount: parseFloat(expenseAmount), category: expenseCategory });
+
+    const newExpense = { id: currentId, name: expenseName, amount: parseFloat(expenseAmount), category: expenseCategory };
+
+    const itemList = renderExpenseItem(newExpense); 
+    expenses.push(newExpense);
     updateTotal(); 
-
-     console.log(expenses); // Log the expenses array to the console for debugging
     expenseList.appendChild(itemList);
-    form.reset(); // Reset the form fields after submission
+
+    console.log('New expense added:', newExpense); // Log the new expense object    
+    form.reset(); 
 })
+    const expenseList = document.getElementById('expense-list');
 
-const expenseList = document.getElementById('expense-list');
 
-
-expenseList.addEventListener('click', (e) => {
+    expenseList.addEventListener('click', (e) => {
 
     if (e.target.classList.contains('delete-btn')) {
         const listItem = e.target.parentElement;
         const itemId = parseInt(listItem.dataset.id, 10);
         expenses.splice(expenses.findIndex(item => item.id === itemId), 1);
          updateTotal(); // Update the total after deleting an item
-        listItem.remove();
-       
+        listItem.remove();  
+
+        console.log('Expense deleted:', itemId); // Log the ID of the deleted expense
     }
 
-
-
 })
+
 
 // function 
 
@@ -59,4 +51,18 @@ function updateTotal() {
     document.getElementById('total-amount').textContent = `Total: $${totalAmount.toFixed(2)}`;
 }
 
-console.log('Script loaded'); // Log a message to indicate that the script has been loaded
+
+function renderExpenseItem(expense){
+    const itemList = document.createElement('li');
+    const spanItem = document.createElement('span');
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-btn');
+    deleteButton.textContent = 'Delete';
+   
+    spanItem.textContent = `${expense.name}: $${expense.amount.toFixed(2)}`;
+    itemList.appendChild(spanItem);
+    itemList.appendChild(deleteButton);
+    itemList.dataset.id = expense.id; // Assign a unique ID 
+    return itemList;         
+
+}
