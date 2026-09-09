@@ -1,9 +1,15 @@
+
 const form = document.querySelector('form');
 const expenses = [];
 let nextId = 0;
 
 form.addEventListener('submit', (e)=> {
     e.preventDefault();
+
+    console.log('Form submitted'); // Log a message to indicate form submission
+
+    const categoryInput = document.getElementById('category');
+    const expenseCategory = categoryInput.value;
     const currentId = nextId++;
     const expenseInput= document.getElementById('expense');
     const amountInput = document.getElementById('amount');
@@ -20,12 +26,12 @@ form.addEventListener('submit', (e)=> {
     itemList.appendChild(spanItem);
     itemList.appendChild(deleteButton);
     itemList.dataset.id = currentId; // Assign a unique ID 
-    expenses.push({ id: currentId, name: expenseName, amount: parseFloat(expenseAmount) });
-    updateTotal(); // Update the total after adding a new item
+    expenses.push({ id: currentId, name: expenseName, amount: parseFloat(expenseAmount), category: expenseCategory });
+    updateTotal(); 
+
+     console.log(expenses); // Log the expenses array to the console for debugging
     expenseList.appendChild(itemList);
-
     form.reset(); // Reset the form fields after submission
-
 })
 
 const expenseList = document.getElementById('expense-list');
@@ -53,3 +59,4 @@ function updateTotal() {
     document.getElementById('total-amount').textContent = `Total: $${totalAmount.toFixed(2)}`;
 }
 
+console.log('Script loaded'); // Log a message to indicate that the script has been loaded
