@@ -1,8 +1,6 @@
 const form = document.querySelector('form');
-const totalItems = [];
+const expenses = [];
 let nextId = 0;
-
-
 
 form.addEventListener('submit', (e)=> {
     e.preventDefault();
@@ -22,33 +20,36 @@ form.addEventListener('submit', (e)=> {
     itemList.appendChild(spanItem);
     itemList.appendChild(deleteButton);
     itemList.dataset.id = currentId; // Assign a unique ID 
-    totalItems.push({ id: currentId, name: expenseName, amount: parseFloat(expenseAmount) });
-    document.getElementById('expense-list').appendChild(itemList);
-
-    //  expenseInput.value = '';
-    //  amountInput.value = '';
+    expenses.push({ id: currentId, name: expenseName, amount: parseFloat(expenseAmount) });
+    updateTotal(); // Update the total after adding a new item
+    expenseList.appendChild(itemList);
 
     form.reset(); // Reset the form fields after submission
 
-    console.log(totalItems);
 })
 
 const expenseList = document.getElementById('expense-list');
 
 
 expenseList.addEventListener('click', (e) => {
-    console.log(e.target);
 
     if (e.target.classList.contains('delete-btn')) {
         const listItem = e.target.parentElement;
         const itemId = parseInt(listItem.dataset.id, 10);
-        totalItems.splice(totalItems.findIndex(item => item.id === itemId), 1);
+        expenses.splice(expenses.findIndex(item => item.id === itemId), 1);
+         updateTotal(); // Update the total after deleting an item
         listItem.remove();
+       
     }
+
+
 
 })
 
-console.log(expenseList);
-
 // function 
+
+function updateTotal() {
+    const totalAmount = expenses.reduce((sum, item) => sum + item.amount, 0);
+    document.getElementById('total-amount').textContent = `Total: $${totalAmount.toFixed(2)}`;
+}
 
